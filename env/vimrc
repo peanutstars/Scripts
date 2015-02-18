@@ -1,0 +1,38 @@
+set number
+set tabstop=4
+set sts=4
+set cindent        " C 스타일 들여쓰기
+set shiftwidth=4
+set autoindent
+set hlsearch
+set statusline=%h%F%m%r%=[%l:%c(%p%%)] " 상태표시줄 포맷팅
+set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags
+set encoding=utf-8 fileencoding=utf-8
+syntax on          " Syntax highlighting
+
+set cst "CSCOPE 관련
+"map  <F3>  :call GenerateProjectCTags( "Standard", "" )<CR>
+"map  <F4>  :call GenerateProjectCTags( "Exclude Stuff", "--languages=C,C++ --exclude=folder1 --exclude=folder2" )<CR>
+
+let Tlist_Display_Tag_Scope=1
+let Tlist_Display_Tag_ProtoType=1
+let Tlist_Sort_Type=1
+"let Tlist_Use_Right_Window=1
+let Tlist_WinWidth=35
+
+hi cDefine ctermfg=DarkGreen
+hi cInclude ctermfg=DarkGreen
+hi shDeref ctermfg=DarkGreen
+hi cPreCondit ctermfg=DarkYellow
+hi cComment ctermfg=LightBlue
+hi Comment ctermfg=LightBlue
+
+"Edit file from ftp server
+let g:netrw_ftp_cmd = 'pftp'
+
+" Remember to the previous position
+au BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ exe "norm g`\"" |
+\ endif
+
