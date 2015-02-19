@@ -41,6 +41,7 @@ fPackage() {
 		sudo apt-get install -y $PKG
 	done
 	sudo apt-get install -y git-core
+	sudo apt-get install -y git-svn
 }
 fRuby() {
 	DIR_RUBY=/tmp/ruby
@@ -87,7 +88,7 @@ fRedis() {
 fGitLab() {
 	cd /home/git
 	sudo rm -rf *
-	sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-8-stable gitlab
+	sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-7-stable gitlab
 #### Config
 	# Go to GitLab installation folder
 	cd /home/git/gitlab
@@ -157,27 +158,30 @@ fGitLab() {
 # Make config/database.yml readable to git only
 	sudo -u git -H chmod o-rwx config/database.yml
 
-	sudo -u git mv Gemfile Gemfile.orig
-	sudo -u git mv Gemfile.lock Gemfile.lock.orig
-	sudo -u git tar xzvf $DIR_CUR/Gemfiles_20130802.tar.gz
-	sudo -u git ex Gemfile <<EOF
-:%s/https:\/\/rubygems.org/http:\/\/rubygems.org/g
-:wq
-EOF
+#	sudo -u git mv Gemfile Gemfile.orig
+#	sudo -u git mv Gemfile.lock Gemfile.lock.orig
+#	sudo -u git tar xzvf $DIR_CUR/Gemfiles_20130802.tar.gz
+#	sudo -u git ex Gemfile <<EOF
+#:%s/https:\/\/rubygems.org/http:\/\/rubygems.org/g
+#:wq
+#EOF
 	sudo -u git wget https://gitlab.com/gitlab-org/gitlab-ce/raw/5-4-stable/config/puma.rb.example -O config/puma.rb
 
-	cd ..
-	sudo -u git -H git clone git://github.com/cowboyd/libv8.git
+	cd ~
+	wget http://rubygems.org/downloads/modernizr-2.6.2.gem
+	sudo gem install modernizr
+
+	rm -rf libv8
+	git clone git://github.com/cowboyd/libv8.git
 	cd libv8
-	sudo -u git -H bundle install
-	sudo -u git -H bundle exec rake checkout
-	sudo -u git -H bundle exec rake compile
+	bundle install
+	bundle exec rake checkout
+	bundle exec rake compile
 	sudo gem install therubyracer
 
-	cd ../gitlab
+
+	cd /home/git/gitlab
 	sudo apt-get install -y nodejs
-#sudo -u git wget http://rubygems.org/downloads/modernizr-2.6.2.gem
-	sudo gem install modernizr
 
 #### Install Gems
 # For PostgreSQL (note, the option says "without ... mysql")
@@ -233,7 +237,7 @@ fi
 
 fAddFstab
 fAddGitUser
-#fPackage
+fPackage
 fRuby
 fDatabase
 fRedis
