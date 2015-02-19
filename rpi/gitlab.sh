@@ -5,7 +5,7 @@
 #  http://stackoverflow.com/questions/19606735/raspberry-pi-and-gitlab
 #  https://gitlab.com/gitlab-org/gitlab-ce/blob/7-7-stable/doc/install/installation.md
 
-PWD=`pwd`
+DIR_CUR=`pwd`
 SWAPFILE=/swapfile
 SWAP_BS=1024
 SWAP_COUNT=1048576
@@ -52,7 +52,7 @@ fRuby() {
 	make -j4
 	sudo make install
 	sudo gem install bundler --no-ri --no-rdoc
-	cd $PWD
+	cd $DIR_CUR
 }
 fDatabase() {
 	for PKG in postgresql postgresql-client libpq-dev
@@ -157,12 +157,27 @@ fGitLab() {
 # Make config/database.yml readable to git only
 	sudo -u git -H chmod o-rwx config/database.yml
 
-	sudo -u git cp config/puma.rb.example config/puma.rb
 	sudo -u git mv Gemfile Gemfile.orig
 	sudo -u git mv Gemfile.lock Gemfile.lock.orig
-	sudo -u git tar xzvf $PWD/Gemfiles_20130802.tar.gz
+	sudo -u git tar xzvf $DIR_CUR/Gemfiles_20130802.tar.gz
+	sudo -u git ex Gemfile <<EOF
+:%s/https:\/\/rubygems.org/http:\/\/rubygems.org/g
+:wq
+EOF
+	sudo -u git wget https://gitlab.com/gitlab-org/gitlab-ce/raw/5-4-stable/config/puma.rb.example -O config/puma.rb
 
+	cd ..
+	sudo -u git -H git clone git://github.com/cowboyd/libv8.git
+	cd libv8
+	sudo -u git -H bundle install
+	sudo -u git -H bundle exec rake checkout
+	sudo -u git -H bundle exec rake compile
+	sudo gem install therubyracer
+
+	cd ../gitlab
 	sudo apt-get install -y nodejs
+#sudo -u git wget http://rubygems.org/downloads/modernizr-2.6.2.gem
+	sudo gem install modernizr
 
 #### Install Gems
 # For PostgreSQL (note, the option says "without ... mysql")
@@ -219,8 +234,8 @@ fi
 fAddFstab
 fAddGitUser
 #fPackage
-#fRuby
-#fDatabase
-#fRedis
+fRuby
+fDatabase
+fRedis
 fGitLab
 fNginx
