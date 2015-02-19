@@ -43,7 +43,9 @@ fPackage() {
 	sudo apt-get install -y git-core
 }
 fRuby() {
-	mkdir /tmp/ruby && cd /tmp/ruby
+	DIR_RUBY=/tmp/ruby
+	[ -e "$DIR_RUBY" ] && rm -rf $DIR_RUBY
+	mkdir $DIR_RUBY && cd $DIR_RUBY
 	curl -L --progress http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz | tar xz
 	cd ruby-2.1.5
 	./configure --disable-install-rdoc
@@ -84,9 +86,10 @@ fRedis() {
 }
 fGitLab() {
 	cd /home/git
-	sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-7-stable gitlab
-	# Config
-# Go to GitLab installation folder
+	sudo rm -rf *
+	sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 7-8-stable gitlab
+#### Config
+	# Go to GitLab installation folder
 	cd /home/git/gitlab
 
 # Copy the example GitLab config
@@ -138,6 +141,7 @@ fGitLab() {
 # Change the Redis socket path if you are not using the default Debian / Ubuntu configuration
 	sudo -u git -H editor config/resque.yml
 
+#### Config DB
 # PostgreSQL only:
 	sudo -u git cp config/database.yml.postgresql config/database.yml
 
@@ -153,26 +157,38 @@ fGitLab() {
 # Make config/database.yml readable to git only
 	sudo -u git -H chmod o-rwx config/database.yml
 
+	sudo -u git cp config/puma.rb.example config/puma.rb
+	sudo -u git mv Gemfile Gemfile.orig
+	sudo -u git mv Gemfile.lock Gemfile.lock.orig
+	sudo -u git tar xzvf $PWD/Gemfiles_20130802.tar.gz
+
+	sudo apt-get install -y nodejs
+
+#### Install Gems
 # For PostgreSQL (note, the option says "without ... mysql")
 	sudo -u git -H bundle install --deployment --without development test mysql aws
 
+# Or if you use MySQL (note, the option says "without ... postgres")
+	sudo -u git -H bundle install --deployment --without development test postgres aws
 
+#### Install GitLab Shell
 # Run the installation task for gitlab-shell (replace `REDIS_URL` if needed):
-	sudo -u git -H bundle exec rake gitlab:shell:install[v2.4.2] REDIS_URL=unix:/var/run/redis/redis.sock RAILS_ENV=production
+	sudo -u git -H bundle exec rake gitlab:shell:install[v2.4.3] REDIS_URL=unix:/var/run/redis/redis.sock RAILS_ENV=production
 
 # By default, the gitlab-shell config is generated from your main GitLab config.
 # You can review (and modify) the gitlab-shell config as follows:
 	sudo -u git -H editor /home/git/gitlab-shell/config.yml
 
-
-
+#### Initialize Database and Activate Advanced Features
 	sudo -u git -H bundle exec rake gitlab:setup RAILS_ENV=production
+
 #sudo -u git -H bundle exec rake gitlab:setup RAILS_ENV=production GITLAB_ROOT_PASSWORD=1234
 
 
+#### Install Init Script
 	sudo cp lib/support/init.d/gitlab /etc/init.d/gitlab
 	sudo cp lib/support/logrotate/gitlab /etc/logrotate.d/gitlab
-
+	sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production
 	sudo update-rc.d gitlab defaults 21
 }
 
@@ -181,6 +197,7 @@ fNginx() {
 	cd /home/git/gitlab
 	sudo cp lib/support/nginx/gitlab /etc/nginx/sites-available/gitlab
 	sudo ln -s /etc/nginx/sites-available/gitlab /etc/nginx/sites-enabled/gitlab
+	
 }
 #################################################################
 
