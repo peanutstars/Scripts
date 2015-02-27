@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PWD=`pwd`
+CurDir=`pwd`
+KermitDir=~/kermit
 
 fInit() {
 	sudo apt-get update
@@ -8,11 +9,12 @@ fInit() {
 }
 
 fInsEnv() {
+	[ ! -e "$KermitDir" ] && mkdir -p $KermitDir
 	for F in init/env/*
 	do
-		echo " Install $PWD/$F"
+		echo " Install $CurDir/$F"
 		BF=`basename $F`
-		ln -sf $PWD/$F ~/.$BF
+		ln -sf $CurDir/$F ~/.$BF
 	done
 }
 
