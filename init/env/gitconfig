@@ -1,8 +1,13 @@
 [color]
-status = auto
+	status = auto
 
 [color "status"]
-added = green
-changed = blue
-untracked = magenta
-deleted = red
+	added = green
+	changed = blue
+	untracked = magenta
+	deleted = red
+
+[user]
+	name = peanutstars
+	email = peanutstars.lee@gmail.com
+
