@@ -2,8 +2,13 @@
 
 PWD=`pwd`
 
+fInit() {
+	sudo apt-get update
+	sudo apt-get install -y vim
+}
+
 fInsEnv() {
-	for F in env/*
+	for F in init/env/*
 	do
 		echo " Install $PWD/$F"
 		BF=`basename $F`
@@ -11,4 +16,5 @@ fInsEnv() {
 	done
 }
 
+fInit
 fInsEnv

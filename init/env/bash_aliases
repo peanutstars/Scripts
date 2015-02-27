@@ -1,0 +1,5 @@
+
+PS1="( ${FGRN}[\u ${FYEL}\# \t] \w ${RS}) \n$ "
+PS2='more input >'
+
+alias ll='ls -l'

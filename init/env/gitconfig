@@ -1,0 +1,8 @@
+[color]
+status = auto
+
+[color "status"]
+added = green
+changed = blue
+untracked = magenta
+deleted = red
