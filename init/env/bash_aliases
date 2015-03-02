@@ -7,8 +7,8 @@ PS2='more input >'
 
 alias ll='ls -l'
 
-alias sshTs='ssh -R 10022:localhost:22 -N'
-alias sshTc='ssh -p 10022'
+alias sshTs='ssh -f -R 10022:localhost:22 -N'
+alias sshTc='ssh -p 10022 $UID@localhost'
 
 alias kermit0='sudo script -c "kermit ~/Scripts/init/cfg/ttyUSB0 -c" -f ~/kermit/kermit0-`date +%y%m%d-%H%M`'
 alias kermit1='sudo script -c "kermit ~/Scripts/init/cfg/ttyUSB1 -c" -f ~/kermit/kermit1-`date +%y%m%d-%H%M`'
