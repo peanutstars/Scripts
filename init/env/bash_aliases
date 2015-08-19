@@ -5,7 +5,10 @@ RS="\[\033[0m\]"
 PS1="( ${FGRN}[\u ${FYEL}\# \t] \w ${RS}) \n$ "
 PS2='more input >'
 
-alias ll='ls -l'
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+alias ll='ls -al'
 
 alias sshTs='ssh -f -R 10022:localhost:22 -N'
 alias sshTc='ssh -p 10022 $UID@localhost'
