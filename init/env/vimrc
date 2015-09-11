@@ -6,7 +6,7 @@ set shiftwidth=4
 set autoindent
 set hlsearch
 set statusline=%h%F%m%r%=[%l:%c(%p%%)] " 상태표시줄 포맷팅
-set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags
+set tags=/work/project/source_codes/tags,./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags
 set encoding=utf-8 fileencoding=utf-8
 syntax on          " Syntax highlighting
 
@@ -35,4 +35,7 @@ au BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
 \ exe "norm g`\"" |
 \ endif
+
+au BufRead,BufNewFile *.pde set filetype=arduino
+au BufRead,BufNewFile *.ino set filetype=arduino
 

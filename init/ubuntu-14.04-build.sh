@@ -12,3 +12,4 @@ sudo apt-get install gcc-multilib
 sudo apt-get install g++-multilib
 sudo apt-get install libc6-dev zlib1g-dev
 sudo apt-get install libncurses5-dev:i386 libreadline6-dev:i386 zlib1g-dev:i386
+sudo usermod -a -G uucp,dialout `whoami`
