@@ -1,0 +1,23 @@
+set line /dev/ttyACM0
+#set speed 2400
+#set speed 4800
+#set speed 9600
+#set speed 14400	N
+#set speed 19200
+#set speed 28800	N
+#set speed 38400
+#set speed 57600
+#set speed 76800	N
+set speed 115200
+set carrier-watch off
+set handshake none
+set flow-control none
+robust
+set file type bin
+set file name lit
+set rec pack 1000
+set send pack 1000
+set window 5
+#set terminal newline-mode on
+#set terminal cr-display CRLF
+
