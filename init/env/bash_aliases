@@ -13,10 +13,15 @@ alias ll='ls -al'
 alias sshTs='ssh -f -R 10022:localhost:22 -N'
 alias sshTc='ssh -p 10022 $UID@localhost'
 
-alias kermitACM0='sudo script -c "kermit ~/Scripts/init/cfg/ttyACM0 -c" -f ~/kermit/kermitACM0-`date +%y%m%d-%H%M`'
-alias kermit0='sudo script -c "kermit ~/Scripts/init/cfg/ttyUSB0 -c" -f ~/kermit/kermit0-`date +%y%m%d-%H%M`'
-alias kermit1='sudo script -c "kermit ~/Scripts/init/cfg/ttyUSB1 -c" -f ~/kermit/kermit1-`date +%y%m%d-%H%M`'
-alias kermit2='sudo script -c "kermit ~/Scripts/init/cfg/ttyUSB2 -c" -f ~/kermit/kermit2-`date +%y%m%d-%H%M`'
+alias kermitACM0='sudo script -c "kermit ~/Scripts/init/env/ttyACM0 -c" -f ~/kermit/kermitACM0-`date +%y%m%d-%H%M`'
+alias kermit0='sudo script -c "kermit ~/Scripts/init/env/ttyUSB0 -c" -f ~/kermit/kermit0-`date +%y%m%d-%H%M`'
+alias kermit1='sudo script -c "kermit ~/Scripts/init/env/ttyUSB1 -c" -f ~/kermit/kermit1-`date +%y%m%d-%H%M`'
+alias kermit2='sudo script -c "kermit ~/Scripts/init/env/ttyUSB2 -c" -f ~/kermit/kermit2-`date +%y%m%d-%H%M`'
+
+alias KermitACM0='kermit ~/Scripts/init/env/ttyACM0 -c'
+alias Kermit0='kermit ~/Scripts/init/env/ttyUSB0 -c'
+alias Kermit1='kermit ~/Scripts/init/env/ttyUSB1 -c'
+alias Kermit2='kermit ~/Scripts/init/env/ttyUSB2 -c'
 
 alias Eclipse='cd ~/opt/adt-bundle-linux-x86_64-20140702/eclipse; ./eclipse & cd -'
 
