@@ -11,12 +11,14 @@ fInit() {
 
 fInsEnv() {
 	[ ! -e "$KermitDir" ] && mkdir -p $KermitDir
-	for F in init/env/*
-	do
-		echo " Install $CurDir/$F"
-		BF=`basename $F`
-		ln -sf $CurDir/$F ~/.$BF
-	done
+	[ ! -e "~/env" ] && ln -sf $CurDir/init/env ~/env
+	cp -a ~/env/vimrc ~/.vimrc
+	BashRc=`cat ~/.bashrc | grep shellUtils.env`
+	if [ -z "$BashRc" ] ; then
+		echo "" >> ~/.bashrc
+		echo ". ~/env/shellUtils.env" >> ~/.bashrc
+		echo ". ~/env/bash_aliases" >> ~/.bashrc
+	fi
 }
 
 fInit
