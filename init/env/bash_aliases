@@ -23,5 +23,7 @@ alias Kermit0='kermit ~/Scripts/init/env/ttyUSB0 -c'
 alias Kermit1='kermit ~/Scripts/init/env/ttyUSB1 -c'
 alias Kermit2='kermit ~/Scripts/init/env/ttyUSB2 -c'
 
+#alias Grep='grep --exclude-from=/home/hslee/env/filter.grep'
+
 alias Eclipse='cd ~/opt/adt-bundle-linux-x86_64-20140702/eclipse; ./eclipse & cd -'
 
