@@ -12,12 +12,15 @@ fInit() {
 fInsEnv() {
 	[ ! -e "$KermitDir" ] && mkdir -p $KermitDir
 	[ ! -e "~/env" ] && ln -sf $CurDir/init/env ~/env
-	cp -a ~/env/vimrc ~/.vimrc
-	BashRc=`cat ~/.bashrc | grep shellUtils.env`
-	if [ -z "$BashRc" ] ; then
+	for EF in vimrc bash_aliases gitconfig
+	do
+		cp -a ~/env/$EF ~/.$EF
+	done
+	BASHRC=`cat ~/.bashrc | grep shellUtils.env`
+	if [ -z "$BASHRC" ] ; then
 		echo "" >> ~/.bashrc
+		echo "##### Private Configuration" >> ~/.bashrc
 		echo ". ~/env/shellUtils.env" >> ~/.bashrc
-		echo ". ~/env/bash_aliases" >> ~/.bashrc
 	fi
 }
 
