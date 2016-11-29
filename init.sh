@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CurDir=`pwd`
-KermitDir=~/kermit
+Home=/home/$LOGNAME
+KermitDir=$HOME/kermit
 
 fInit() {
 	sudo apt-get update
@@ -11,16 +12,16 @@ fInit() {
 
 fInsEnv() {
 	[ ! -e "$KermitDir" ] && mkdir -p $KermitDir
-	[ ! -e "~/env" ] && ln -sf $CurDir/init/env ~/env
+	[ ! -e "$HOME/env" ] && ln -sf $CurDir/init/env $HOME/env
 	for EF in vimrc bash_aliases gitconfig
 	do
-		cp -a ~/env/$EF ~/.$EF
+		cp -a $HOME/env/$EF $HOME/.$EF
 	done
-	BASHRC=`cat ~/.bashrc | grep shellUtils.env`
+	BASHRC=`cat $HOME/.bashrc | grep shellUtils.env`
 	if [ -z "$BASHRC" ] ; then
-		echo "" >> ~/.bashrc
-		echo "##### Private Configuration" >> ~/.bashrc
-		echo ". ~/env/shellUtils.env" >> ~/.bashrc
+		echo "" >> $HOME/.bashrc
+		echo "##### Private Configuration" >> $HOME/.bashrc
+		echo ". ~/env/shellUtils.env" >> $HOME/.bashrc
 	fi
 }
 
