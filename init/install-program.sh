@@ -21,17 +21,30 @@ InstallPackage() {
   done
 }
 
+InstallRuby() {
+  local _version="$1"
+  \curl -L https://get.rvm.io | sudo bash -s stable
+  sudo adduser $LOGNAME rvm
+  exec su -l $LOGNAME
+  source /etc/profile.d/rvm.sh
+  rvm install $_version
+}
+
 Usage() {
-  echo "Usage: $0 <platform>"
+  echo "Usage: $0 <platform|program> [<parameters>...]"
   echo "  platform list:"
   echo "    ubuntu raspberrypi"
+  echo "  program list:"
+  echo "    ruby <version> : Install Ruby"
+  exit -1
 }
 
 
 #### Main
 cmd="$1"
+shift
 
-[ -z "$cmd" ] && Usage && exit 1
+[ -z "$cmd" ] && Usage
 [ -n "$LOGNAME" ] && sudo usermod -a -G uucp,dialout $LOGNAME
 sudo apt-get update
 InstallPackage Common[@]
@@ -40,5 +53,10 @@ case "$cmd" in
     InstallPackage Ubuntu[@]
     [ -z "`ps xa | grep indicator-multiload | grep -v grep`" ] \
       && indicator-multiload &
+    ;;
+  ruby)
+    version="$1"
+    [ ! "$version" ] && echo "please input a ruby version" && Usage
+    InstallRuby $version
     ;;
 esac

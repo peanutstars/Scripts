@@ -21,6 +21,7 @@ fInsEnv() {
 		echo "" >> ~/.bashrc
 		echo "##### Private Configuration" >> ~/.bashrc
 		echo ". ~/env/shellUtils.env" >> ~/.bashrc
+        echo "[ -r \"/etc/profile.d/rvm.sh\" ] && . /etc/profile.d/rvm.sh"
 	fi
 }
 
