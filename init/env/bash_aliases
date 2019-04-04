@@ -17,11 +17,17 @@ alias kermitACM0='sudo script -c "kermit ~/Scripts/init/env/ttyACM0 -c" -f ~/ker
 alias kermit0='sudo script -c "kermit ~/Scripts/init/env/ttyUSB0 -c" -f ~/kermit/kermit0-`date +%y%m%d-%H%M`'
 alias kermit1='sudo script -c "kermit ~/Scripts/init/env/ttyUSB1 -c" -f ~/kermit/kermit1-`date +%y%m%d-%H%M`'
 alias kermit2='sudo script -c "kermit ~/Scripts/init/env/ttyUSB2 -c" -f ~/kermit/kermit2-`date +%y%m%d-%H%M`'
+alias kermit3='sudo script -c "kermit ~/Scripts/init/env/ttyUSB3 -c" -f ~/kermit/kermit3-`date +%y%m%d-%H%M`'
+alias kermit4='sudo script -c "kermit ~/Scripts/init/env/ttyUSB4 -c" -f ~/kermit/kermit4-`date +%y%m%d-%H%M`'
+alias kermit5='sudo script -c "kermit ~/Scripts/init/env/ttyUSB5 -c" -f ~/kermit/kermit5-`date +%y%m%d-%H%M`'
+alias kermit6='sudo script -c "kermit ~/Scripts/init/env/ttyUSB6 -c" -f ~/kermit/kermit6-`date +%y%m%d-%H%M`'
+alias kermit7='sudo script -c "kermit ~/Scripts/init/env/ttyUSB7 -c" -f ~/kermit/kermit7-`date +%y%m%d-%H%M`'
 
 alias KermitACM0='kermit ~/Scripts/init/env/ttyACM0 -c'
 alias Kermit0='kermit ~/Scripts/init/env/ttyUSB0 -c'
 alias Kermit1='kermit ~/Scripts/init/env/ttyUSB1 -c'
 alias Kermit2='kermit ~/Scripts/init/env/ttyUSB2 -c'
+alias Kermit3='kermit ~/Scripts/init/env/ttyUSB3 -c'
 
 #alias Grep='grep --exclude-from=/home/hslee/env/filter.grep'
 
